@@ -17,10 +17,17 @@ from spark_agent import SparkAgent
 
 class MyAgent(SparkAgent):
     def think(self, perception):
-        angle = 0
-        temperature = 0
+    
+        
         # YOUR CODE HERE
         # get angle and temperature to current data of joint HeadYaw
+        angle = perception.joint.get("HeadYaw")
+        temperature = perception.joint_temperature.get("HeadYaw")
+
+        if angle is None or temperature is None:
+            print('Cannot get the angle or temperature of the joint HeadYaw')
+            return super(MyAgent, self).think(perception)
+
 
         print('HeadYaw angle: ' + str(angle) + ' temperature: ' + str(temperature))
         return super(MyAgent, self).think(perception)
